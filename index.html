@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Robot Vacuum</title>
+</head>
+
+<body>
+    <div class="house">
+        <div class="room">
+            <div class="element" style="background-color: brown;">
+                <div id="vacuum" class="vacuum"></div>
+            </div>
+            <div class="element" style="background-color: brown;"></div>
+            <div class="element" style="background-color: brown;"></div>
+            <div class="element" style="background-color: brown;"></div>
+            <div class="element" style="background-color: brown;"></div>
+            <div class="element" style="background-color: brown;"></div>
+            <div class="element" style="background-color: brown;"></div>
+            <div class="element" style="background-color: brown;"></div>
+            <div class="element" style="background-color: brown;"></div>
+        </div>
+        <div class="room">
+            <div class="element" style="background-color: white;"></div>
+            <div class="element" style="background-color: white;"></div>
+            <div class="element" style="background-color: white;"></div>
+            <div class="element" style="background-color: white;"></div>
+            <div class="element" style="background-color: white;"></div>
+            <div class="element" style="background-color: white;"></div>
+            <div class="element" style="background-color: white;"></div>
+            <div class="element" style="background-color: white;"></div>
+            <div class="element" style="background-color: white;"></div>
+        </div>
+        <div class="hall"></div>
+
+    </div>
+
+    <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+        <h1  style="position: absolute; left: 20%;">ROOM1</h1>
+        <button id="start" class="start" onclick="loop1(5); this.disabled=true">START</button>
+        <h1  style="position: absolute; right: 20%;">ROOM2</h1>
+
+    </div>
+    <script>
+        const vacuum = document.getElementById("vacuum");
+        const startButton = document.getElementById("start");
+        const elementArr = document.querySelectorAll(".element");
+        function loop1(iteration) {
+            if (iteration == 0) {
+                console.log("returned");
+                return;
+            }
+            setTimeout(function () {
+                for (let i = 0; i < elementArr.length; i++) {
+                    setTimeout(function () {
+                        console.log(i);
+                        if (i + 1 != elementArr.length) {
+                            console.log("dis if girdi");
+                            console.log("Background Color: " + elementArr[i].style.backgroundColor);
+                            if (elementArr[i].style.backgroundColor == "brown") {
+                                console.log("if girdi");
+                                elementArr[i].innerHTML = "";
+                                elementArr[i].style.backgroundColor = "white";
+                                elementArr[i + 1].innerHTML = "<div id='vacuum' class='vacuum'></div>"
+                            } else {
+                                elementArr[i].innerHTML = "";
+                                elementArr[i + 1].innerHTML = "<div id='vacuum' class='vacuum'></div>"
+                            }
+                            if (i >= 9) {
+                                elementArr[Math.floor(Math.random() * 9)].style.backgroundColor = "brown";
+                            } else {
+                                elementArr[Math.floor(Math.random() * 9) + 9].style.backgroundColor = "brown";
+                            }
+                        } else {
+                            elementArr[i].innerHTML = "";
+                            elementArr[i].style.background = "white";
+                            elementArr[0].innerHTML = "<div id='vacuum' class='vacuum'></div>";
+
+                        }
+                    }, 500 * i);
+                }
+
+            }, 500);
+            setTimeout(function () {
+                loop1(iteration - 1);
+            }, 500 * elementArr.length); // 1000 milliseconds = 1 second delay between loops
+        }
+
+    </script>
+</body>
+
+
+</html>

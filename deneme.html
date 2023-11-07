@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Robot Vacuum</title>
+</head>
+
+<body>
+    <div class="house">
+
+        <div class="room">
+            <div class="element" style="background-color: brown;"></div>
+            <div class="element" style="background-color: brown;"></div>
+            <div class="element" style="background-color: brown;"></div>
+            <div class="element" style="background-color: brown;"></div>
+            <div class="element" style="background-color: brown;"></div>
+            <div class="element" style="background-color: brown;"></div>
+            <div class="element" style="background-color: brown;"></div>
+            <div class="element" style="background-color: brown;"></div>
+            <div class="element" style="background-color: brown;"></div>
+        </div>
+        <div class="room">
+            <div class="element" style="background-color: white;"></div>
+            <div class="element" style="background-color: brown;"></div>
+            <div class="element" style="background-color: white;"></div>
+            <div class="element" style="background-color: brown;"></div>
+            <div class="element" style="background-color: white;"></div>
+            <div class="element" style="background-color: white;"></div>
+            <div class="element" style="background-color: white;"></div>
+            <div class="element" style="background-color: white;"></div>
+            <div class="element" style="background-color: brown;"></div>
+        </div>
+        <div class="hall"></div>
+        <div id="vacuum" class="vacuum" style="top:41%; left: 46%;"></div>
+    </div>
+
+    <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+        <h1 style="position: absolute; left: 20%;">ROOM1</h1>
+        <button id="start" class="start" onclick="loop1(); this.disabled=true">START</button>
+        <h1 style="position: absolute; right: 20%;">ROOM2</h1>
+
+    </div>
+    <script>
+        const vacuum = document.getElementById("vacuum");
+        const startButton = document.getElementById("start");
+        const elementArr = document.querySelectorAll(".element");
+        var index = tara();
+        function loop1() {
+            if (index < 8) {
+                index = tara();
+                if (index == 999) {
+                    index = tara2();
+                    if (index == 999) {
+                        return;
+                    }
+                }
+            } else {
+                index = tara2();
+                if (index == 999) {
+                    index = tara();
+                    if (index == 999) {
+                        return;
+                    }
+                }
+            }
+            console.log(index);
+            setTimeout(function () {
+                console.log("girdi");
+                var offsets = elementArr[index].getBoundingClientRect();
+                console.log(offsets.left);
+                console.log(offsets.top);
+                vacuum.style.left = offsets.left + "px";
+                vacuum.style.top = offsets.top + "px";
+                console.log(vacuum.style.left);
+                console.log(vacuum.style.top);
+                elementArr[index].style.backgroundColor = "white";
+                if (index >= 9) {
+                    elementArr[Math.floor(Math.random() * 9)].style.backgroundColor = "brown";
+                } else {
+                    elementArr[Math.floor(Math.random() * 9) + 9].style.backgroundColor = "brown";
+                }
+                loop1();
+            }, 500);
+        }
+        function tara() {
+            for (let i = 0; i < elementArr.length / 2; i++) {
+                if (elementArr[i].style.backgroundColor == "brown") {
+                    return i;
+                }
+            };
+            return 999;
+        }
+        function tara2() {
+            for (let i = elementArr.length / 2; i < elementArr.length; i++) {
+                if (elementArr[i].style.backgroundColor == "brown") {
+                    return i;
+                }
+            };
+            return 999;
+        }
+       
+    </script>
+</body>
+
+
+</html>
